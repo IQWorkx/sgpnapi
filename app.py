@@ -33,7 +33,7 @@ def is_valid_token(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.cookies.get('jwt_token')  # or from header
-        if not token or not is_token_valid(token, app.config['SECRET_KEY']):
+        if not token or not is_token_valid(token):
             return jsonify({'message': 'Invalid or missing token'}), 401
         return f(*args, **kwargs)
     return decorated
