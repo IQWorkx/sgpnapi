@@ -29,4 +29,4 @@ def add_user():
     return jsonify({"status": "User added"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, host='sgpnapi.plantnavigator.com', port=5000)
+    app.run(debug=True,  port=5000)
