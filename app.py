@@ -12,7 +12,7 @@ app.config['MYSQL_PORT'] = db_config.MYSQL_PORT
 
 mysql = MySQL(app)
 
-@app.route('/', methods=['GET'])
+@app.route('/get-sgusers', methods=['GET'])
 def index():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users")

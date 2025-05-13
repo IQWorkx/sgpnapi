@@ -5,30 +5,15 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>User List</h1>
-    <ul>
-        {% for user in users %}
-        <li>{{ user[1] }} - {{ user[2] }}</li>
-        {% endfor %}
-    </ul>
-    <form id="userForm">
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <button type="submit">Add User</button>
-    </form>
-
-    <script>
-        document.getElementById('userForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const res = await fetch('/add_user', {
-                method: 'POST',
-                body: formData
-            });
-            if (res.ok) {
-                location.reload();
-            }
-        });
-    </script>
+<div class="container" onclick="onclick">
+  <div class="top"></div>
+  <div class="bottom"></div>
+  <div class="center">
+    <h2>Please Sign In</h2>
+    <input type="email" placeholder="email"/>
+    <input type="password" placeholder="password"/>
+    <h2>&nbsp;</h2>
+  </div>
+</div>
 </body>
 </html>
