@@ -71,7 +71,7 @@ def is_valid_token(f):
     return decorated
 
 @app.route('/get-sgusers', methods=['GET'])
-@is_valid_token
+@token_required
 def get_sgusers():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users")
@@ -79,7 +79,7 @@ def get_sgusers():
     return jsonify(users), 200
 
 @app.route('/get-sgusers/<int:user_id>', methods=['GET'])
-@token_required
+@is_valid_token
 def get_users(user_id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users WHERE users_id = %s", (user_id,))
