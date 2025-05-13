@@ -15,18 +15,18 @@ mysql = MySQL(app)
 @app.route('/', methods=['GET'])
 def index():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM users")
+    cur.execute("SELECT * FROM cam_users")
     users = cur.fetchall()
     return jsonify(users), 200;
 
-@app.route('/add_user', methods=['POST'])
-def add_user():
-    name = request.form['name']
-    email = request.form['email']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
-    mysql.connection.commit()
-    return jsonify({"status": "User added"}), 200
+# @app.route('/add_user', methods=['POST'])
+# def add_user():
+#     name = request.form['name']
+#     email = request.form['email']
+#     cur = mysql.connection.cursor()
+#     cur.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
+#     mysql.connection.commit()
+#     return jsonify({"status": "User added"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True,  port=5000)
