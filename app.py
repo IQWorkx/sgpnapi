@@ -29,4 +29,4 @@ def add_user():
     return jsonify({"status": "User added"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, host='pyrapi', port=8989)
+    app.run(debug=True)
