@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
 import db_config
+import datetime
+from functools import wraps
+import jwt
 
 app = Flask(__name__)
 
@@ -16,7 +19,29 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html')
 
+app.config['SECRET_KEY'] = 'HTS_S@@rgummi@2025'  # Change this in production
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.cookies.get('jwt_token')
+
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            current_user = User.query.filter_by(public_id=data['public_id']).first()
+        except:
+            return jsonify({'message': 'Token is invalid!'}), 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
+
 @app.route('/get-sgusers', methods=['GET'])
+@token_required
 def get_sgusers():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users")
@@ -41,6 +66,7 @@ def get_users(user_id):
 #     cur.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
 #     mysql.connection.commit()
 #     return jsonify({"status": "User added"}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True,  port=5000)
