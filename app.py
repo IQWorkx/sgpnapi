@@ -24,7 +24,7 @@ def get_sgusers():
     return jsonify(users), 200
 
 @app.route('/get-sgusers/<int:user_id>', methods=['GET'])
-def get_user(user_id):
+def get_sgusers(user_id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users WHERE id = %s", (user_id,))
     user = cur.fetchone()
