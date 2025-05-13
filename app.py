@@ -23,18 +23,6 @@ def index():
 app.config['SECRET_KEY'] = 'HTS_S@@rgummi@2025'  # Change this in production
 
 # Token validation function
-def get_jwt_payload():
-    auth_header = request.headers.get('Authorization')
-    if not auth_header or not auth_header.startswith("Bearer "):
-        return None, "Missing or invalid Authorization header"
-
-    token = auth_header.split(" ")[1]
-    try:
-        jwt.decode(token,  app.config['SECRET_KEY'], algorithms=["HS256"])
-        return True
-    except (ExpiredSignatureError, InvalidTokenError, Exception):
-        return False
-    
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -53,22 +41,6 @@ def token_required(f):
         return f(*args, **kwargs)
     return decorated     
 
-def is_token_valid(token: str) -> bool:
-    try:
-        jwt.decode(token,  app.config['SECRET_KEY'], algorithms=["HS256"])
-        return True
-    except (ExpiredSignatureError, InvalidTokenError, Exception):
-        return False
-        
-def is_valid_token(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.cookies.get('jwt_token')  # or from header
-        if not token or not is_token_valid(token):
-            return jsonify({'message': 'Invalid or missing token'}), 401
-        return f(*args, **kwargs)
-    return decorated
-
 @app.route('/get-sgusers', methods=['GET'])
 @token_required
 def get_sgusers():
@@ -78,7 +50,7 @@ def get_sgusers():
     return jsonify(users), 200
 
 @app.route('/get-sgusers/<int:user_id>', methods=['GET'])
-@is_valid_token
+@token_required
 def get_users(user_id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users WHERE users_id = %s", (user_id,))
