@@ -28,30 +28,6 @@ def is_token_valid(token: str) -> bool:
         return True
     except (ExpiredSignatureError, InvalidTokenError, Exception):
         return False
-    
-
-def validate_token(token: str):
-    try:
-        payload = jwt.decode(token,  app.config['SECRET_KEY'], algorithms=["HS256"])
-        return {
-            'valid': True,
-            'payload': payload
-        }
-    except ExpiredSignatureError:
-        return {
-            'valid': False,
-            'error': 'Token has expired'
-        }
-    except InvalidTokenError:
-        return {
-            'valid': False,
-            'error': 'Invalid token'
-        }
-    except Exception as e:
-        return {
-            'valid': False,
-            'error': str(e)
-        }
         
 def is_valid_token(f):
     @wraps(f)
@@ -60,25 +36,6 @@ def is_valid_token(f):
         if not token or not is_token_valid(token, app.config['SECRET_KEY']):
             return jsonify({'message': 'Invalid or missing token'}), 401
         return f(*args, **kwargs)
-    return decorated
-
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.cookies.get('jwt_token')  # or from headers
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 401
-
-        try:
-            jwt.decode(token,  app.config['SECRET_KEY'], algorithms=["HS256"])
-        except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired!'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'message': 'Token is invalid!'}), 401
-
-        return f(*args, **kwargs)
-
     return decorated
 
 @app.route('/get-sgusers', methods=['GET'])
