@@ -14,13 +14,10 @@ mysql = MySQL(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM cam_users")
-    users = cur.fetchall()
     return render_template('index.html')
 
 @app.route('/get-sgusers', methods=['GET'])
-def index():
+def get_sgusers():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users")
     users = cur.fetchall()
