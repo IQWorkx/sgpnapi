@@ -32,7 +32,7 @@ def get_jwt_payload():
 
     try:
         payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
-        return None
+        return payload, None
     except ExpiredSignatureError:
         return None, "Token expired"
     except InvalidTokenError:
@@ -41,10 +41,10 @@ def get_jwt_payload():
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        error = get_jwt_payload()
+        payload, error = get_jwt_payload()
         if error:
             return jsonify({'message': error}), 401
-        return f(*args, **kwargs)  # Pass payload to route
+        return f(payload, *args, **kwargs)  # Pass payload to route
     return decorated
 
 def is_token_valid(token: str) -> bool:
