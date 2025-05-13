@@ -50,7 +50,6 @@ def token_required(f):
             return jsonify({'message': 'Token has expired or is invalid'}), 401
         except Exception as e:
             return jsonify({'message': 'Invalid token'}), 401
-        kwargs['token_payload'] = payload 
         return f(*args, **kwargs)
     return decorated     
 
