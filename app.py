@@ -29,23 +29,29 @@ def get_jwt_payload():
         return None, "Missing or invalid Authorization header"
 
     token = auth_header.split(" ")[1]
-
     try:
-        payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
-        return payload, None
-    except ExpiredSignatureError:
-        return None, "Token expired"
-    except InvalidTokenError:
-        return None, "Invalid token"
+        jwt.decode(token,  app.config['SECRET_KEY'], algorithms=["HS256"])
+        return True
+    except (ExpiredSignatureError, InvalidTokenError, Exception):
+        return False
     
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        payload, error = get_jwt_payload()
-        if error:
-            return jsonify({'message': error}), 401
-        return f(payload, *args, **kwargs)  # Pass payload to route
-    return decorated
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith("Bearer "):
+            return jsonify({'message': 'Missing or invalid Authorization header'}), 401
+        token = auth_header.split(" ")[1]
+        if not token:
+            return jsonify({'message': 'Missing token'}), 401
+        try:
+            jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        except (ExpiredSignatureError, InvalidTokenError):
+            return jsonify({'message': 'Token has expired or is invalid'}), 401
+        except Exception as e:
+            return jsonify({'message': 'Invalid token'}), 401
+        return f(*args, **kwargs)
+    return decorated     
 
 def is_token_valid(token: str) -> bool:
     try:
