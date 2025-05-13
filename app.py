@@ -45,11 +45,12 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'Missing token'}), 401
         try:
-            jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            payload=jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
         except (ExpiredSignatureError, InvalidTokenError):
             return jsonify({'message': 'Token has expired or is invalid'}), 401
         except Exception as e:
             return jsonify({'message': 'Invalid token'}), 401
+        kwargs['token_payload'] = payload 
         return f(*args, **kwargs)
     return decorated     
 
