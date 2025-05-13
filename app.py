@@ -12,12 +12,29 @@ app.config['MYSQL_PORT'] = db_config.MYSQL_PORT
 
 mysql = MySQL(app)
 
+@app.route('/', methods=['GET'])
+def index():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cam_users")
+    users = cur.fetchall()
+    return render_template('index.html')
+
 @app.route('/get-sgusers', methods=['GET'])
 def index():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM cam_users")
     users = cur.fetchall()
-    return jsonify(users), 200;
+    return jsonify(users), 200
+
+@app.route('/get-sgusers/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cam_users WHERE id = %s", (user_id,))
+    user = cur.fetchone()
+    if user:
+        return jsonify(user), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 # @app.route('/add_user', methods=['POST'])
 # def add_user():
