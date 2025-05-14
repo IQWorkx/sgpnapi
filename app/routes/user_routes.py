@@ -11,7 +11,7 @@ pn_app = Flask(__name__)
 pn_app.config['MYSQL_HOST'] = Config.MYSQL_HOST
 pn_app.config['MYSQL_USER'] = Config.MYSQL_USER
 pn_app.config['MYSQL_PASSWORD'] = Config.MYSQL_PASSWORD
-pn_app.config['MYSQL_DB'] = Config.MYSQL_PN_DB
+pn_app.config['MYSQL_DB'] = Config.MYSQL_DB
 pn_app.config['MYSQL_PORT'] = Config.MYSQL_PORT
 
 mysql = MySQL(pn_app)
