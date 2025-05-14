@@ -3,7 +3,6 @@ from flask import Flask, Blueprint, jsonify, request
 from app.models.CamUsers import CamUsers 
 from config import Config
 from app.decorators.auth_decorators import token_required  # Import token_required
-from flask_mysqldb import MySQL
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/', methods=['GET'])
