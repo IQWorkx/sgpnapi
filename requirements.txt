@@ -3,3 +3,4 @@ flask-mysqldb
 PyJWT
 flask-jwt-extended
 flask_sqlalchemy
+pymysql
