@@ -4,6 +4,6 @@ from flask import render_template
 
 pn_bp = Blueprint('pn', __name__, url_prefix='/pn')
 
-@pn.route('/', methods=['GET'])
+@pn_bp.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
