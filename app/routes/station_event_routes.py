@@ -3,7 +3,6 @@ from flask import Flask, Blueprint, jsonify, request
 from config import Config
 from app.decorators.auth_decorators import token_required  # Import token_required
 from app.services.station_event_service import fetch_station_events
-
 station_bp = Blueprint('station_events', __name__, url_prefix='/station_events')
 
 @station_bp.route('/' , methods=['GET'])
