@@ -13,4 +13,4 @@ class Config:
 	MAIL_USE_TLS = True
 	MAIL_USERNAME = 'your_email@gmail.com'
 	MAIL_PASSWORD = 'your_password_or_app_password'
-	# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ashams001:iqHired@123@localhost/survey_db'
+	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://pn_admin_Usr:HtsPool2024@3.219.173.225/plantnavigator'
