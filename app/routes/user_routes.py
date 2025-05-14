@@ -15,7 +15,7 @@ def get_users():
 
 @user_bp.route('/<int:user_id>', methods=['GET'])
 @token_required
-def get_user(user_id):
+def get_users(user_id):
     user = CamUsers.query.get_or_404(user_id)
     return jsonify({'id': user.id, 'name': user.name})
 
