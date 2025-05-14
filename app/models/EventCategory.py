@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 class EventCategory(Base):
-    __tablename__ = 'event_category'
+    __tablename__ = 'events_category'
 
     events_cat_id = Column(Integer, primary_key=True, autoincrement=True)
     events_cat_name = Column(String(255), nullable=True)
