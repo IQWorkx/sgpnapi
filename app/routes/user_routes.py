@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from app.models.user import User, CamUsers  # Import CamUsers model
+from app.models.CamUsers import CamUsers 
 from config import Config
 from extensions import db
 from app.decorators.auth_decorators import token_required  # Import token_required
