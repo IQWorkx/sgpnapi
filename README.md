@@ -4,7 +4,7 @@ How to run on Gunicorn
 
 ✅ 1. wsgi.py
 
-Create this in /var/www/py/wsgi.py:
+Create this in /var/www/py/sgpnapi/wsgi.py:
 
 from app import app
 
@@ -27,8 +27,8 @@ After=network.target
 [Service]
 User=ubuntu
 Group=www-data
-WorkingDirectory=/var/www/py
-Environment="PATH=/var/www/py/venv/bin"
+WorkingDirectory=/var/www/py/sgpnapi
+Environment="PATH=/var/www/py/sgpnapi/venv/bin"
 ExecStart=/var/www/py/venv/bin/gunicorn --workers 3 --bind unix:/var/www/py/sgpnapi.sock wsgi:app
 
 [Install]
@@ -69,7 +69,7 @@ Also in AWS EC2 > Security Groups, make sure ports 80 and 443 are open.
 
 Make sure Gunicorn is installed inside your virtualenv:
 
-cd /var/www/py
+cd /var/www/py/sgpnapi
 source venv/bin/activate
 pip install gunicorn flask
 ✅ Final Test
