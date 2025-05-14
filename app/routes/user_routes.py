@@ -15,9 +15,9 @@ def get_users():
 
 @user_bp.route('/<int:user_id>', methods=['GET'])
 @token_required
-def get_users(user_id):
+def get_user_by_id(user_id):
     user = CamUsers.query.get_or_404(user_id)
-    return jsonify({'id': user.id, 'name': user.name})
+    return jsonify({'id': user.users_id, 'name': user.user_name})
 
 # @user_bp.route('/', methods=['POST'])
 # def create_user():
