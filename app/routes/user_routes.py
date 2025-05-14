@@ -2,9 +2,9 @@ from flask import Blueprint, jsonify, request
 from app.models.user import User
 from extensions import db
 from app.decorators.auth_decorators import token_required  # Import token_required
-
+from flask_mysqldb import MySQL
 user_bp = Blueprint('user', __name__, url_prefix='/users')
-
+mysql = MySQL()
 @user_bp.route('/get-sgusers', methods=['GET'])
 @token_required
 def get_sgusers():
