@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.extensions import db
+from extensions import db
 from flask import render_template
 
 pn_bp = Blueprint('pn', __name__, url_prefix='/pn')

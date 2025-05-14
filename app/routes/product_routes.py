@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.models.product import Product
-from app.extensions import db
+from extensions import db
 
 product_bp = Blueprint('product', __name__, url_prefix='/products')
 
