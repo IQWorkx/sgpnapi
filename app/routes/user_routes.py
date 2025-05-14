@@ -1,10 +1,21 @@
 from flask import Blueprint, jsonify, request
 from app.models.user import User
+from config import Config
 from extensions import db
 from app.decorators.auth_decorators import token_required  # Import token_required
 from flask_mysqldb import MySQL
 user_bp = Blueprint('user', __name__, url_prefix='/users')
-mysql = MySQL()
+
+pn_app = Flask(__name__)
+
+pn_app.config['MYSQL_HOST'] = Config.MYSQL_HOST
+pn_app.config['MYSQL_USER'] = Config.MYSQL_USER
+pn_app.config['MYSQL_PASSWORD'] = Config.MYSQL_PASSWORD
+pn_app.config['MYSQL_DB'] = Config.MYSQL_PN_DB
+pn_app.config['MYSQL_PORT'] = Config.MYSQL_PORT
+
+mysql = MySQL(pn_app)
+
 @user_bp.route('/get-sgusers', methods=['GET'])
 @token_required
 def get_sgusers():
