@@ -2,7 +2,6 @@ from flask import Flask
 from .extensions import db, jwt
 from app.routes import register_routes
 from .config import Config
-from app.routes.auth_routes import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +15,5 @@ def create_app():
     #     db.create_all()
 
     register_routes(app)
-    app.register_blueprint(auth_bp)
 
     return app
