@@ -1,7 +1,7 @@
 from flask import Flask
-from .extensions import db, jwt
+from extensions import db, jwt
 from app.routes import register_routes
-from .config import Config
+from config import Config
 from app.routes.auth_routes import auth_bp   
 
 app = create_app()
