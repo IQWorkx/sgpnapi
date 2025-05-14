@@ -1,6 +1,5 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request , render_template
 from extensions import db
-from flask import render_template
 
 pn_bp = Blueprint('pn', __name__, url_prefix='/pn')
 
