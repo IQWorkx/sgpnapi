@@ -13,6 +13,7 @@ pn_app.config['MYSQL_USER'] = Config.MYSQL_USER
 pn_app.config['MYSQL_PASSWORD'] = Config.MYSQL_PASSWORD
 pn_app.config['MYSQL_DB'] = Config.MYSQL_DB
 pn_app.config['MYSQL_PORT'] = Config.MYSQL_PORT
+pn_app.config['MYSQL_UNIX_SOCKET'] = None
 
 mysql = MySQL(pn_app)
 
