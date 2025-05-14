@@ -6,7 +6,7 @@ from app.services.station_event_service import fetch_station_events
 
 station_bp = Blueprint('station_events', __name__, url_prefix='/station_events')
 
-@station_bp.route('/api/station-events' , methods=['GET'])
+@station_bp.route('/' , methods=['GET'])
 @token_required
 def get_station_events():
     event_type_id = request.args.get('event_type_id', type=int)
