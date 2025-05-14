@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
-import db_config
+import config
 import datetime
 from functools import wraps
 import jwt
@@ -8,11 +8,11 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = db_config.MYSQL_HOST
-app.config['MYSQL_USER'] = db_config.MYSQL_USER
-app.config['MYSQL_PASSWORD'] = db_config.MYSQL_PASSWORD
-app.config['MYSQL_DB'] = db_config.MYSQL_DB
-app.config['MYSQL_PORT'] = db_config.MYSQL_PORT
+app.config['MYSQL_HOST'] = config.MYSQL_HOST
+app.config['MYSQL_USER'] = config.MYSQL_USER
+app.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD
+app.config['MYSQL_DB'] = config.MYSQL_PN_DB
+app.config['MYSQL_PORT'] = config.MYSQL_PORT
 
 mysql = MySQL(app)
 
@@ -20,7 +20,7 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html')
 
-app.config['SECRET_KEY'] = 'HTS_S@@rgummi@2025'  # Change this in production
+app.config['SECRET_KEY'] = config.SECRET_KEY  # Change this in production
 
 # Token validation function
 def token_required(f):
