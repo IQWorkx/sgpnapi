@@ -2,17 +2,17 @@
 <html>
 <head>
     <title>User List</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="container" onclick="onclick">
+<div class="container">
   <div class="top"></div>
   <div class="bottom"></div>
   <div class="center">
     <h2>Please Sign In</h2>
-    <input type="email" placeholder="email"/>
-    <input type="password" placeholder="password"/>
-    <h2>&nbsp;</h2>
+    <input type="email" name="email" placeholder="email"/>
+    <input type="password" name="password" placeholder="password"/>
+    <div class="spacer"></div>
   </div>
 </div>
 </body>

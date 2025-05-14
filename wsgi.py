@@ -4,7 +4,7 @@ from app.routes import register_routes
 from config import Config
 from app.routes.auth_routes import auth_bp   
 
-app = Flask(__name__, template_folder=Config.TEMPLATE_FOLDER)
+app = Flask(__name__, template_folder=Config.TEMPLATE_FOLDER , static_folder=Config.STATIC_FOLDER) 
 app.config.from_object(Config)
 
 db.init_app(app)
