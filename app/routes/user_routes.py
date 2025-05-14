@@ -1,9 +1,29 @@
 from flask import Blueprint, jsonify, request
 from app.models.user import User
 from extensions import db
+from app.decorators.auth_decorators import token_required  # Import token_required
 
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
+@user_bp.route('/get-sgusers', methods=['GET'])
+@token_required
+def get_sgusers():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cam_users")
+    users = cur.fetchall()
+    return jsonify(users), 200
+
+@user_bp.route('/get-sgusers/<int:user_id>', methods=['GET'])
+@token_required
+def get_users(user_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cam_users WHERE users_id = %s", (user_id,))
+    user = cur.fetchone()
+    if user:
+        return jsonify(user), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
+    
 @user_bp.route('/', methods=['GET'])
 def get_users():
     users = User.query.all()
