@@ -1,45 +1,46 @@
 from flask import Flask, Blueprint, jsonify, request
-from app.models.user import User
+from app.models.user import User, CamUsers  # Import CamUsers model
 from config import Config
 from extensions import db
 from app.decorators.auth_decorators import token_required  # Import token_required
 from flask_mysqldb import MySQL
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
-pn_app = Flask(__name__)
+# pn_app = Flask(__name__)
 
-pn_app.config['MYSQL_HOST'] = Config.MYSQL_HOST
-pn_app.config['MYSQL_USER'] = Config.MYSQL_USER
-pn_app.config['MYSQL_PASSWORD'] = Config.MYSQL_PASSWORD
-pn_app.config['MYSQL_DB'] = Config.MYSQL_DB
-pn_app.config['MYSQL_PORT'] = Config.MYSQL_PORT
-pn_app.config['MYSQL_UNIX_SOCKET'] = None
+# pn_app.config['MYSQL_HOST'] = Config.MYSQL_HOST
+# pn_app.config['MYSQL_USER'] = Config.MYSQL_USER
+# pn_app.config['MYSQL_PASSWORD'] = Config.MYSQL_PASSWORD
+# pn_app.config['MYSQL_DB'] = Config.MYSQL_DB
+# pn_app.config['MYSQL_PORT'] = Config.MYSQL_PORT
+# pn_app.config['MYSQL_UNIX_SOCKET'] = None
 
-mysql = MySQL(pn_app)
+# mysql = MySQL(pn_app)
 
-@user_bp.route('/get-sgusers', methods=['GET'])
-@token_required
-def get_sgusers():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM cam_users")
-    users = cur.fetchall()
-    return jsonify(users), 200
+# @user_bp.route('/get-sgusers', methods=['GET'])
+# @token_required
+# def get_sgusers():
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM cam_users")
+#     users = cur.fetchall()
+#     return jsonify(users), 200
 
-@user_bp.route('/get-sgusers/<int:user_id>', methods=['GET'])
-@token_required
-def get_users(user_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM cam_users WHERE users_id = %s", (user_id,))
-    user = cur.fetchone()
-    if user:
-        return jsonify(user), 200
-    else:
-        return jsonify({"error": "User not found"}), 404
+# @user_bp.route('/get-sgusers/<int:user_id>', methods=['GET'])
+# @token_required
+# def get_users(user_id):
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM cam_users WHERE users_id = %s", (user_id,))
+#     user = cur.fetchone()
+#     if user:
+#         return jsonify(user), 200
+#     else:
+#         return jsonify({"error": "User not found"}), 404
     
-# @user_bp.route('/', methods=['GET'])
-# def get_users():
-#     users = User.query.all()
-#     return jsonify([{'id': u.id, 'name': u.name} for u in users])
+@user_bp.route('/', methods=['GET'])
+@token_required
+def get_users():
+    users = CamUsers.query.all()
+    return jsonify([{'id': u.users_id, 'name': u.user_name} for u in users])
 
 # @user_bp.route('/<int:user_id>', methods=['GET'])
 # def get_user(user_id):

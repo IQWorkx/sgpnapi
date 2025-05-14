@@ -5,4 +5,4 @@ from .product import Product
 # Import all models here to make them available for use.
 
 
-__all__ = ["User", "Product"]
+__all__ = ["User", "Product" , "CamUsers"]
