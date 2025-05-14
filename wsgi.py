@@ -1,8 +1,7 @@
 from flask import Flask
 from extensions import db, jwt
 from app.routes import register_routes
-from config import Config
-from app.routes.auth_routes import auth_bp   
+from config import Config 
 
 app = Flask(__name__, template_folder=Config.TEMPLATE_FOLDER , static_folder=Config.STATIC_FOLDER) 
 app.config.from_object(Config)
@@ -15,7 +14,6 @@ jwt.init_app(app)
 #     db.create_all()
 
 register_routes(app)
-app.register_blueprint(auth_bp)
 
 if __name__ == "__main__":
       app.run(debug=True,  port=5000)
