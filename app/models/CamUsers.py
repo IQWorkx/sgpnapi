@@ -1,16 +1,11 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import declarative_base
+from extensions import db
 
-Base = declarative_base()
-
-class CamUsers(Base):
+class CamUsers(db.Model):
     __tablename__ = 'cam_users'
-
-    users_id = Column(Integer, primary_key=True, autoincrement=True)
-    user_name = Column(String(255), nullable=False, unique=True)
-    email = Column(String(255), nullable=False, unique=True)
-    created_at = Column(DateTime, nullable=False)
-    updated_at = Column(DateTime, nullable=True)
-
+    users_id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    created_at = db.Column(db.DateTime, nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=True)
     def __repr__(self):
-        return f"<CamUsers(id={self.id}, username='{self.username}', email='{self.email}')>"
+        return f"<CamUsers(id={self.users_id}, username='{self.user_name}', email='{self.email}')>"

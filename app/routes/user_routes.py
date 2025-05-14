@@ -1,7 +1,7 @@
+from extensions import db
 from flask import Flask, Blueprint, jsonify, request
 from app.models.CamUsers import CamUsers 
 from config import Config
-from extensions import db
 from app.decorators.auth_decorators import token_required  # Import token_required
 from flask_mysqldb import MySQL
 user_bp = Blueprint('user', __name__, url_prefix='/users')
@@ -40,6 +40,8 @@ user_bp = Blueprint('user', __name__, url_prefix='/users')
 @token_required
 def get_users():
     users = CamUsers.query.all()
+    if not users:
+        return jsonify({"error": "No users found"}), 404
     return jsonify([{'id': u.users_id, 'name': u.user_name} for u in users])
 
 # @user_bp.route('/<int:user_id>', methods=['GET'])
