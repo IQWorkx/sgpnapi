@@ -1,4 +1,7 @@
 class Config:
+    TEMPLATE_FOLDER = 'app/templates'
+	STATIC_FOLDER = 'app/static'
+ 
 	# MySQL Database Configuration
 	MYSQL_HOST = '3.219.173.225'
 	MYSQL_USER = 'pn_admin_Usr'
