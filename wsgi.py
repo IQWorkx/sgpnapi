@@ -2,6 +2,10 @@ from flask import Flask
 from extensions import db, jwt
 from app.routes import register_routes
 from config import Config 
+import logging
+logging.basicConfig(filename='logapp.log', level=logging.INFO)
+logging.info("App started")
+
 
 app = Flask(__name__, template_folder=Config.TEMPLATE_FOLDER , static_folder=Config.STATIC_FOLDER) 
 app.config.from_object(Config)
